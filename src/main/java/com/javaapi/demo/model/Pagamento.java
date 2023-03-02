@@ -98,6 +98,9 @@ public class Pagamento {
 		var pagamento = new Pagamento();
 		
 		pagamento.setId(p.getId());
+		pagamento.setCod_debit(p.getCod_debit());
+		pagamento.setPayment_method(p.getPayment_method());
+		pagamento.setPayment_amount(p.getPayment_amount());
 		pagamento.setDoc_payer(p.getDoc_payer());
 		pagamento.setStatus(p.getStatus());
 		

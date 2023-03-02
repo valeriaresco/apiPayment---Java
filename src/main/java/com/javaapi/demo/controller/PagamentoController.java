@@ -33,6 +33,7 @@ public class PagamentoController {
 		return pagamentorepository.findAll();
 	}
 	
+	// filtrando por mais de um
 	@GetMapping("/pagamentos/filters")
 	public List<Pagamento> findPayment(
 			@RequestParam(value = "id", required = false) Long id,
