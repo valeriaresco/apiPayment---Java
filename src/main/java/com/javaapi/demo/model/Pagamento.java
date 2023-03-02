@@ -94,6 +94,15 @@ public class Pagamento {
 		this.status = status;
 	}
 	
+	public static Pagamento converter(Pagamento p) {
+		var pagamento = new Pagamento();
+		
+		pagamento.setId(p.getId());
+		pagamento.setDoc_payer(p.getDoc_payer());
+		pagamento.setStatus(p.getStatus());
+		
+		return pagamento;
+	}
 	
 	
 }
