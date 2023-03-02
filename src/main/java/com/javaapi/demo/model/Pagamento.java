@@ -30,19 +30,19 @@ public class Pagamento {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	//@NotNull
+	@NotNull
 	 private Integer cod_debit;
 	 
-	//@NotNull
+	@NotNull
 	private Long doc_payer;
 	
-	//@NotNull
+	@NotNull
 	private String payment_method;
 	
-	//@NotNull
+	@NotNull
 	private Float payment_amount;
 	
-	//@NotNull
+	@NotNull
 		private String status;
 
 	
