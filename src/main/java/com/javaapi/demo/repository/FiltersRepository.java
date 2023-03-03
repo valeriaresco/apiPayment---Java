@@ -21,7 +21,7 @@ private final EntityManager em;
 
 		String query = "select p from Pagamento as p";
 		String condition = " where ";
-		String ret = "Não encontrado";
+		//String ret = "Não encontrado";
 		
 		//System.out.println("AQUI: "+id + "DOC_PAYER: "+ doc_payer);
 		if(id != null) {
@@ -36,9 +36,7 @@ private final EntityManager em;
 		
 		if(status != null) {
 			query += condition + " p.status = :status ";
-		} else {
-			
-		}
+		} 
 		
 		var q = em.createQuery(query, Pagamento.class);
 		

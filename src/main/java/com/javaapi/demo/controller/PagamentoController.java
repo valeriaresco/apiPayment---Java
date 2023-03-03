@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaapi.demo.model.Pagamento;
@@ -54,12 +58,28 @@ public class PagamentoController {
 	
 	/*//Apagando um pagamento
 	@DeleteMapping("/pagamentos/{id}")
-	public String deletePagamento(@PathVariable String id) {
-
-		System.out.println(deleteRepository.deletePaymenteFromStatus(id));
-		return "Oi";
+	public void deletePagamento(@PathVariable Long id, String status) {
+		deleteRepository.deletePaymenteFromStatus(id);
+		System.out.println(id);
+		
 	}*/
 	
 	
-
+	
+	//Atualizando o pagamento
+	@PutMapping(value = "/pagamentos/{id}" //, produces ="aplication/json"
+			)
+	
+	@ResponseBody
+	public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @RequestBody Pagamento pagamento){
+			
+		//if (pagamento.getCod_debit() == null) {
+			//return new ResponseEntity<String>("O codigo do pagamento não pode ser vazio", HttpStatus.OK);
+		//}
+		
+		Pagamento pagamento1 = pagamentorepository.saveAndFlush(pagamento);
+		
+			return new ResponseEntity<Pagamento>(pagamento1, HttpStatus.OK);
+	}
+	
 }
