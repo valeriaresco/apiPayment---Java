@@ -44,3 +44,8 @@ RFN3 - When the payment is "Pending Processing", it can be changed to "Successfu
 - Spring Boot
 - Java 17
 - H2 Database
+
+# - How to use
+Clone the repository and open the folder in Spring Tools Suit. After that, run the project.
+
+# - How to use the routs
