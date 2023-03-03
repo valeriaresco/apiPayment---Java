@@ -1,6 +1,7 @@
 package com.javaapi.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaapi.demo.model.Pagamento;
+import com.javaapi.demo.model.StatusPayment;
 import com.javaapi.demo.repository.DeleteRepository;
 import com.javaapi.demo.repository.FiltersRepository;
 import com.javaapi.demo.repository.PagamentoRepository;
@@ -65,10 +67,30 @@ public class PagamentoController {
 	}*/
 	
 	
+	@DeleteMapping (value="/pagamentos/{id}")//, produces ="aplication/json"
+	public String delete(@PathVariable Long id) { // ResponseEntity nos permite manipular a resposta como um todo
+		//if (pagamento.getId() != null) {
+			Optional<Pagamento> pagamento = deleteRepository.findById(id);
+		//}
+			//Se um valor estiver presente retorna true , se não, retorna false .
+			if (pagamento.isPresent()) {
+				Pagamento deletePayment = pagamento.get();
+				if (deletePayment.getStatus() == StatusPayment.PENDING) {
+					deleteRepository.delete(deletePayment);
+					return "Pagamento deletado com sucesso"; //ResponseEntity.noContent().build();	
+				} else {
+					return "Um pagamento só pode ser deletado se estiver pendente"; //ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+				}
+			} else {
+				return  "Id não encontrado"; //ResponseEntity.notFound().build();
+			}
+	}
+	
+	
 	
 	//Atualizando o pagamento
-	@PutMapping(value = "/pagamentos/{id}" //, produces ="aplication/json"
-			)
+	@PutMapping( "/pagamentos/{id}") //, produces ="aplication/json")
+			
 	
 	@ResponseBody
 	public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @RequestBody Pagamento pagamento){

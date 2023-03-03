@@ -1,14 +1,22 @@
 package com.javaapi.demo.repository;
 
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.javaapi.demo.model.Pagamento;
+import com.javaapi.demo.model.StatusPayment;
 
 import jakarta.persistence.EntityManager;
 
 @Repository
-public class DeleteRepository{
+public interface  DeleteRepository extends JpaRepository<Pagamento, Long>{
+	
+	List<Pagamento> findByStatus(StatusPayment status); 
+	
+	/*
 	private final EntityManager em;
 
 	public DeleteRepository(EntityManager em) {
@@ -28,9 +36,11 @@ public class DeleteRepository{
 		}
 		//System.out.println(q.getResultList());
 		
-		return id;
+		return id;*/
+		
+		
 		
 	
-	}
+	//}
 	
 }
