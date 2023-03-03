@@ -25,83 +25,78 @@ import com.javaapi.demo.repository.PagamentoRepository;
 
 @RestController
 public class PagamentoController {
-	
+
 	@Autowired
 	private PagamentoRepository pagamentorepository;
 	@Autowired
 	private DeleteRepository deleteRepository;
 	@Autowired
 	private FiltersRepository filtersRepository;
-	
-	//Listando todos os pagamentos
+
+	// Listando todos os pagamentos
 	@GetMapping("/pagamentos")
-	public List<Pagamento> show(){
+	public List<Pagamento> show() {
 		return pagamentorepository.findAll();
 	}
-	
+
 	// filtrando por mais de um
 	@GetMapping("/pagamentos/filters")
-	public List<Pagamento> findPayment(
-			@RequestParam(value = "id", required = false) Long id,
+	public List<Pagamento> findPayment(@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "doc_payer", required = false) Long doc_payer,
-			@RequestParam(value = "status", required = false) String status
-			){
-				return filtersRepository.find(id, doc_payer, status)
-						.stream()
-						.map(Pagamento::converter)
-						.collect(Collectors.toList());
-			}
-	
-	//Cadastrar os pagamentos
+			@RequestParam(value = "status", required = false) String status) {
+		return filtersRepository.find(id, doc_payer, status).stream().map(Pagamento::converter)
+				.collect(Collectors.toList());
+	}
+
+	// Cadastrar os pagamentos
 	@PostMapping("/pagamentos")
-	public Pagamento add(@RequestBody /*@Valid*/ Pagamento pagamento) {
+	public Pagamento add(@RequestBody /* @Valid */ Pagamento pagamento) {
 		return pagamentorepository.save(pagamento);
 	}
-	
-	/*//Apagando um pagamento
-	@DeleteMapping("/pagamentos/{id}")
-	public void deletePagamento(@PathVariable Long id, String status) {
-		deleteRepository.deletePaymenteFromStatus(id);
-		System.out.println(id);
-		
-	}*/
-	
-	
-	@DeleteMapping (value="/pagamentos/{id}")//, produces ="aplication/json"
+
+	/*
+	 * //Apagando um pagamento
+	 * 
+	 * @DeleteMapping("/pagamentos/{id}") public void deletePagamento(@PathVariable
+	 * Long id, String status) { deleteRepository.deletePaymenteFromStatus(id);
+	 * System.out.println(id);
+	 * 
+	 * }
+	 */
+
+	@DeleteMapping(value = "/pagamentos/{id}") // , produces ="aplication/json"
 	public String delete(@PathVariable Long id) { // ResponseEntity nos permite manipular a resposta como um todo
-		//if (pagamento.getId() != null) {
-			Optional<Pagamento> pagamento = deleteRepository.findById(id);
-		//}
-			//Se um valor estiver presente retorna true , se não, retorna false .
-			if (pagamento.isPresent()) {
-				Pagamento deletePayment = pagamento.get();
-				if (deletePayment.getStatus() == StatusPayment.PENDING) {
-					deleteRepository.delete(deletePayment);
-					return "Pagamento deletado com sucesso"; //ResponseEntity.noContent().build();	
-				} else {
-					return "Um pagamento só pode ser deletado se estiver pendente"; //ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-				}
+		// if (pagamento.getId() != null) {
+		Optional<Pagamento> pagamento = deleteRepository.findById(id);
+		// }
+		// Se um valor estiver presente retorna true , se não, retorna false .
+		if (pagamento.isPresent()) {
+			Pagamento deletePayment = pagamento.get();
+			if (deletePayment.getStatus() == StatusPayment.PENDING) {
+				deleteRepository.delete(deletePayment);
+				return "{\"OK\":\"Pagamento deletado com sucesso!\"}"; // ResponseEntity.noContent().build();
 			} else {
-				return  "Id não encontrado"; //ResponseEntity.notFound().build();
+				return "{\"WARN\":\"Um pagamento só pode ser deletado se estiver pendente!\"}"; // ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
+		} else {
+			return "{\"ERRO\":\"Id não encontrado!\"}"; // ResponseEntity.notFound().build();
+		}
 	}
-	
-	
-	
-	//Atualizando o pagamento
-	@PutMapping( "/pagamentos/{id}") //, produces ="aplication/json")
-			
-	
+
+	// Atualizando o pagamento
+	@PutMapping("/pagamentos/{id}") // , produces ="aplication/json")
+
 	@ResponseBody
-	public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @RequestBody Pagamento pagamento){
-			
-		//if (pagamento.getCod_debit() == null) {
-			//return new ResponseEntity<String>("O codigo do pagamento não pode ser vazio", HttpStatus.OK);
-		//}
-		
+	public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @RequestBody Pagamento pagamento) {
+
+		// if (pagamento.getCod_debit() == null) {
+		// return new ResponseEntity<String>("O codigo do pagamento não pode ser vazio",
+		// HttpStatus.OK);
+		// }
+
 		Pagamento pagamento1 = pagamentorepository.saveAndFlush(pagamento);
-		
-			return new ResponseEntity<Pagamento>(pagamento1, HttpStatus.OK);
+
+		return new ResponseEntity<Pagamento>(pagamento1, HttpStatus.OK);
 	}
-	
+
 }
