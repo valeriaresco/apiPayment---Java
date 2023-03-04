@@ -48,4 +48,8 @@ RFN3 - When the payment is "Pending Processing", it can be changed to "Successfu
 # - How to use
 Clone the repository and open the folder in Spring Tools Suit. After that, run the project.
 
-# - How to use the routs
+# - How to use the routes
+To verify the operation of the application, open the file located in the "docRoutes" folder.
+To use it, you need to import it into the Insomnia framework following these steps: Application > Preferences > Data > Import Data .
+
+After these steps, you select the Insomnia file on your machine and the collection will be ready to be used.
