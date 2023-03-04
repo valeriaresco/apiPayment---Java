@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.javaapi.demo.model.Pagamento;
+import com.javaapi.demo.model.StatusPayment;
 
 import jakarta.persistence.EntityManager;
 
@@ -17,15 +18,15 @@ public class FiltersRepository {
 		this.em = em;
 	}
 
-	public List<Pagamento> find(Long id, Long doc_payer, String status) {
+	public List<Pagamento> find( Integer cod_debit, Long doc_payer, StatusPayment status) {
 
 		String query = "select p from Pagamento as p";
 		String condition = " where ";
 		// String ret = "Não encontrado";
 
 		// System.out.println("AQUI: "+id + "DOC_PAYER: "+ doc_payer);
-		if (id != null) {
-			query += condition + " p.id = :id ";
+		if (cod_debit != null) {
+			query += condition + " p.cod_debit = :cod_debit ";
 			condition = " and ";
 		}
 
@@ -40,8 +41,8 @@ public class FiltersRepository {
 
 		var q = em.createQuery(query, Pagamento.class);
 
-		if (id != null) {
-			q.setParameter("id", id);
+		if (cod_debit != null) {
+			q.setParameter("cod_debit", cod_debit);
 		}
 
 		if (doc_payer != null) {

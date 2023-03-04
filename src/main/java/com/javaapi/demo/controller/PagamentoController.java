@@ -42,10 +42,10 @@ public class PagamentoController {
 
 	// filtrando por mais de um
 	@GetMapping("/pagamentos/filters")
-	public List<Pagamento> findPayment(@RequestParam(value = "id", required = false) Long id,
+	public List<Pagamento> findPayment(@RequestParam(value = "cod_debit", required = false) Integer cod_debit,
 			@RequestParam(value = "doc_payer", required = false) Long doc_payer,
-			@RequestParam(value = "status", required = false) String status) {
-		return filtersRepository.find(id, doc_payer, status).stream().map(Pagamento::converter)
+			@RequestParam(value = "status", required = false) StatusPayment status) {
+		return filtersRepository.find(cod_debit, doc_payer, status).stream().map(Pagamento::converter)
 				.collect(Collectors.toList());
 	}
 
