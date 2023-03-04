@@ -50,7 +50,7 @@ public class PagamentoController {
 
 	// Cadastrar os pagamentos
 	@PostMapping("/pagamentos")
-	public Pagamento add(@RequestBody /* @Valid */ Pagamento pagamento) {
+	public Pagamento addPayment(@RequestBody /* @Valid */ Pagamento pagamento) {
 		return pagamentorepository.save(pagamento);
 	}
 
@@ -63,7 +63,8 @@ public class PagamentoController {
 	 * 
 	 * }
 	 */
-
+	
+	//apagando pagamento (somente se estiver pendente)
 	@DeleteMapping(value = "/pagamentos/{id}") // , produces ="aplication/json"
 	public String delete(@PathVariable Long id) { // ResponseEntity nos permite manipular a resposta como um todo
 		// if (pagamento.getId() != null) {
@@ -84,15 +85,14 @@ public class PagamentoController {
 	}
 
 	// Atualizando o pagamento
-	@PutMapping("/pagamentos/{id}") // , produces ="aplication/json")
-
+	@PutMapping("/pagamentos/{id}")  //, produces ="aplication/json")
 	@ResponseBody
 	public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @RequestBody Pagamento pagamento) {
 
-		// if (pagamento.getCod_debit() == null) {
-		// return new ResponseEntity<String>("O codigo do pagamento não pode ser vazio",
-		// HttpStatus.OK);
-		// }
+		if (pagamento.getCod_debit() == null) {
+		 return new ResponseEntity<String>("{\"WARN\":\"O codigo do pagamento não pode ser vazio!\"}",
+		HttpStatus.OK);
+		 }
 
 		Pagamento pagamento1 = pagamentorepository.saveAndFlush(pagamento);
 

@@ -34,6 +34,9 @@ public class Pagamento {
 	private Integer cod_debit;
 
 	@NotNull
+	private Integer card_num;
+
+	@NotNull
 	private Long doc_payer;
 
 	@NotNull
@@ -96,7 +99,15 @@ public class Pagamento {
 		this.status = status;
 	}
 
-	// FUNÇÃO PARA RETORNO NOS FILTROS
+	public Integer getCard_num() {
+		return card_num;
+	}
+
+	public void setCard_num(Integer card_num) {
+		this.card_num = card_num;
+	}
+
+	// FUNÇÃO PARA RETORNO DOS DADOS NOS FILTROS
 	public static Pagamento converter(Pagamento p) {
 		var pagamento = new Pagamento();
 
@@ -106,6 +117,7 @@ public class Pagamento {
 		pagamento.setPayment_amount(p.getPayment_amount());
 		pagamento.setDoc_payer(p.getDoc_payer());
 		pagamento.setStatus(p.getStatus());
+		pagamento.setCard_num(p.getCard_num());
 
 		return pagamento;
 	}
