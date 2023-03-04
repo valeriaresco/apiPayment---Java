@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,5 +99,20 @@ public class PagamentoController {
 
 		return new ResponseEntity<Pagamento>(pagamento1, HttpStatus.OK);
 	}
+	
+	//update 2 teste
+	/*@PutMapping("/pagamentos/{id}")
+	public String att2(@PathVariable Long id) { 
+		
+		Optional<Pagamento> pagamento = deleteRepository.findById(id);
+	
+		
+		if (pagamento == null) {
+			return "{\"ERRO\":\"Id não encontrado!\"}";
+		}
+		
+		if	()	
+	}*/
+	
 
 }
